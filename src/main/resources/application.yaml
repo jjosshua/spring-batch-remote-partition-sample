@@ -1,0 +1,46 @@
+server.port: 8080
+
+spring.profiles:
+  active: mix
+
+logging.level:
+  org.springframework.integration: info
+
+database:
+  building.type: remote
+  spring-batch:
+    jdbc-url:  jdbc:h2:tcp://localhost:19200/D:\Program Files\H2\bin\spring-batch
+    username: sa
+    password: sa
+    driver-class-name: org.h2.Driver
+
+# 当database.building.type=embedded时，下面spring。h2.console下的标签的false改为true
+spring.h2.console:
+  settings.web-allow-others: false
+  path: /h2-console #http://127.0.0.1:8080/h2-console
+  enabled: false
+  settings.trace: false
+  
+spring.batch:
+  job:
+    enabled: true
+  jdbc:
+    initialize-schema: embedded
+    platform: h2
+
+spring-batch.custom:
+  remote-partition:
+    type: aggregate # 枚举包括：aggregate、polling
+
+spring.rabbitmq:
+  host: localhost
+  port: 5672
+  username: guest
+  password: guest
+
+management:
+  server.port: 8081
+  endpoints:
+    jmx.exposure.include: "*"
+    web.exposure.include: "*"
+    health.show-details: always
